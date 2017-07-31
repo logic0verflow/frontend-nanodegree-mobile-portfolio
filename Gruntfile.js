@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 	        src: ['*.{gif,jpg,png}'],
-	        cwd: 'img_src/',
+	        cwd: 'src/img',
 	        dest: 'img/'
 				}]
 			},
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 				options: {
 					engine: 'im',
 					sizes: [{
-						width: '300',
+						width: '280',
 						quality: 30,
 						name: 'q30'
 					}],
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 	        src: ['*.{gif,jpg,png}'],
-	        cwd: 'views/images_src/',
+	        cwd: 'src/views/images/',
 	        dest: 'views/images/'
 				}]
 			}
@@ -67,7 +67,41 @@ module.exports = function(grunt) {
 					}]
 				}
 			}
-		}
+		},
+
+		cssmin: {
+			dev: {
+				options: {
+					report: 'gzip'
+				},
+				files: [{
+					expand: true,
+					cwd: 'src/css',
+					src: '*.css',
+					dest: 'css'
+				}]
+			}
+		},
+
+		htmlmin: {
+	    dev: {
+	      options: {
+	        removeComments: true,
+	        collapseWhitespace: true
+	      },
+	      files: [{
+					expand: true,
+					cwd: 'src',
+					src: ['*.html'],
+					dest: ''
+				},{
+					expand: true,
+					cwd: 'src/views',
+					src: ['*.html'],
+					dest: 'views'
+				}]
+	    }
+    },
 
 	});
 
@@ -75,6 +109,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-mkdir');
   grunt.loadNpmTasks('grunt-file-regex-rename');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
-	grunt.registerTask('default', ['clean', 'mkdir', 'responsive_images:img', 'responsive_images:viewsImages', 'fileregexrename']);
+	grunt.registerTask('default', ['clean', 'mkdir', 'responsive_images:img', 'responsive_images:viewsImages', 'fileregexrename', 'cssmin', 'htmlmin']);
 };
