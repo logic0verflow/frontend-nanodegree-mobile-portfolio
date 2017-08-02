@@ -103,6 +103,16 @@ module.exports = function(grunt) {
 	    }
     },
 
+    inlinecss: {
+      dev: {
+        options: {
+        },
+        files: {
+          'index.html': 'index.html'
+        }
+      }
+    }
+
 	});
 
 	grunt.loadNpmTasks('grunt-responsive-images');
@@ -111,6 +121,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-file-regex-rename');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-inline-css');
 
-	grunt.registerTask('default', ['clean', 'mkdir', 'responsive_images:img', 'responsive_images:viewsImages', 'fileregexrename', 'cssmin', 'htmlmin']);
+	grunt.registerTask('default', [
+		'clean',
+		'mkdir',
+		'responsive_images:img',
+		'responsive_images:viewsImages',
+		'fileregexrename',
+		'cssmin',
+		'htmlmin',
+		'inlinecss'
+	]);
 };
