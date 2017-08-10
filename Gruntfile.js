@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 					expand: true,
 	        src: ['*.{gif,jpg,png}'],
 	        cwd: 'src/img',
-	        dest: 'img/'
+	        dest: 'dist/img'
 				}]
 			},
 			viewsImages: {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 					expand: true,
 	        src: ['*.{gif,jpg,png}'],
 	        cwd: 'src/views/images/',
-	        dest: 'views/images/'
+	        dest: 'dist/views/images/'
 				}]
 			}
 		},
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 		/* Clear out the images directory if it exists */
 		clean: {
 			dev: {
-				src: ['img', 'views/images']
+				src: ['dist/img', 'dist/views/images']
 			}
 		},
 
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 		mkdir: {
 			dev: {
 				options: {
-					create: ['img', 'views/images']
+					create: ['dist/img', 'dist/views/images']
 				}
 			}
 		},
@@ -57,8 +57,8 @@ module.exports = function(grunt) {
 		fileregexrename: {
 			dev: {
 				files: {
-					"img/img": "img/*",
-					"views/images/images": "views/images/*"
+					"dist/img/img": "dist/img/*",
+					"dist/views/images/images": "dist/views/images/*"
 				},
 				options: {
 					replacements: [{
@@ -78,7 +78,12 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'src/css',
 					src: '*.css',
-					dest: 'css'
+					dest: 'dist/css'
+				}, {
+					expand: true,
+					cwd: 'src/views/css',
+					src: '*.css',
+					dest: 'dist/views/css'
 				}]
 			}
 		},
@@ -93,12 +98,12 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'src',
 					src: ['*.html'],
-					dest: ''
+					dest: 'dist'
 				},{
 					expand: true,
 					cwd: 'src/views',
 					src: ['*.html'],
-					dest: 'views'
+					dest: 'dist/views'
 				}]
 	    }
     },
@@ -108,10 +113,22 @@ module.exports = function(grunt) {
         options: {
         },
         files: {
-          'index.html': 'index.html'
+          'dist/index.html': 'dist/index.html'
         }
       }
-    }
+    },
+
+    uglify: {
+	    options: {
+	      mangle: false
+	    },
+	    my_target: {
+	      files: {
+	        'dist/js/perfmatters.js': 'src/js/perfmatters.js',
+	        'dist/views/js/main.js': 'src/views/js/main.js'
+	      }
+	    }
+	  }
 
 	});
 
@@ -122,6 +139,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-inline-css');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	grunt.registerTask('default', [
 		'clean',
@@ -131,6 +149,7 @@ module.exports = function(grunt) {
 		'fileregexrename',
 		'cssmin',
 		'htmlmin',
-		'inlinecss'
+		'inlinecss',
+		'uglify'
 	]);
 };
