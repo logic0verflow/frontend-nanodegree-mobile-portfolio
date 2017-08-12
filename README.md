@@ -1,55 +1,48 @@
-## Website Performance Optimization portfolio project
+## Udacity Website Performance Optimization Portfolio Project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
-
-To get started, check out the repository and inspect the code.
+This project aims to provide a better experience for the Udacity Website Performance Optimization project. The two pages that are being optimized are index.html and pizza.html.
 
 ### Getting started
 
-#### Part 1: Optimize PageSpeed Insights score for index.html
+A live version of this project can be viewed and tested by clicking [here](https://logic0verflow.github.io/frontend-nanodegree-mobile-portfolio/dist/). To view the live version of the project prior to the Grunt task changes, click [here](https://logic0verflow.github.io/frontend-nanodegree-mobile-portfolio/src/).
 
-Some useful tips to help you get started:
+Obtain a copy of the project by either downloading a zipped version or using the below command in a terminal with **git** installed.
+```
+git clone https://github.com/logic0verflow/frontend-nanodegree-mobile-portfolio.git
+```
+This project relies on node.js and uses Grunt when developing the distribution ready version of the project (dist) from the original source folder (src). At the time of this writing, the project is built using node.js version 4.2.6 and npm version 3.5.2. Ensure npm and the Grunt CLI packages are installed.
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+### Building for Distribution
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
+A Gruntfile.js file is included with the current set of optimization task to automate. Some of these task include;
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to the top-level of your project directory to make your local server accessible remotely.
+* compressing/optimizing images
+* cleaning out old file versions for newer versions
+* renaming files back to their original names to ensure references are kept the same
+* minifying of HTML, CSS, and Javascript
+* inlining CSS of the index.html page.
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ./ngrok http 8080
-  ```
+To perform all these task, simply run the default grunt task using the command
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+```
+grunt
+```
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+Once complete, the directory **dist** will contain all the files that were modified by Grunt.
 
-#### Part 2: Optimize Frames per Second in pizza.html
+### Optimizations Made to index.html
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+* Removed external font reference for open sans
+* Added media="print" to the link for css/print.css
+* Optimized all the images in src/img and src/views/images using Grunt plugin grunt-responsive-images
+* Minified HTML using Grunt plugin grunt-contrib-htmlmin
+* Minified CSS using Grunt plugin grunt-contrib-cssmin
+* Minified Javascript file perfmatters.js using Grunt plugin grunt-contrib-uglify
+* Inlined CSS using Grunt plugin grunt-inline-css
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+### Optimizations Made to views/js/main.js for pizza.html
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
+* Reformatted **changePizzaSizes** by using a single querySelectorAll and moving the variables within the loop outside of the loop. Did this to avoid numerous forced synchronous layouts. Also created the pizzaAmt variable so length of pizzas didn't have to be calculated each loop.
+* Reformatted **updatePositions** to use requestAnimationFrame whenever the scroll event was triggered. Did this to batch all the updates at the start of the frame since multiple scroll events could be triggered before the next frame occurred. Also defined docTop variable outside the loop that was triggering a layout within the loop before the styling of the items. Also docTop doesn't change for any of the items in the loop so no need to recalculate it again.
+* Minified Javascript using Grunt plugin grunt-contrib-uglify
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
-
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
