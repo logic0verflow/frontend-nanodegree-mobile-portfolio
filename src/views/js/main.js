@@ -402,6 +402,11 @@ var pizzaElementGenerator = function(i) {
 var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
+  // Keep track of the pizza sizes, the old size and the new size
+  this.oldSize = (this.oldSize === undefined) ? 0.3333 : this.oldSize;
+  // this.newSize = (this.newSize === undefined) ? 2 : this.newSize;
+
+
   // Changes the value for the size of the pizza above the slider
   function changeSliderLabel(size) {
     switch(size) {
@@ -421,38 +426,28 @@ var resizePizzas = function(size) {
 
   changeSliderLabel(size);
 
-   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx (elem, size) {
-    var oldWidth = elem.offsetWidth;
-    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
-    var oldSize = oldWidth / windowWidth;
 
-    // Changes the slider value to a percent width
-    function sizeSwitcher (size) {
-      switch(size) {
-        case "1":
-          return 0.25;
-        case "2":
-          return 0.3333;
-        case "3":
-          return 0.5;
-        default:
-          console.log("bug in sizeSwitcher");
-      }
-    }
-
-    var newSize = sizeSwitcher(size);
-    var dx = (newSize - oldSize) * windowWidth;
-
-    return dx;
-  }
-
-  // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
 
     var pizzas = document.querySelectorAll(".randomPizzaContainer");
-    var dx = determineDx(pizzas[0], size);
-    var newwidth = (pizzas[0].offsetWidth + dx) + 'px';
+    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
+    var newwidth;
+		switch(size) {
+      case "1":
+        newwidth = 0.25;
+        break;
+      case "2":
+        newwidth = 0.3333;
+        break;
+      case "3":
+        newwidth = 0.5;
+        break;
+      default:
+        console.log("bug in sizeSwitcher");
+    }
+
+    newwidth *= windowWidth;
+    newwidth += 'px';
 
     for (var i = 0, pizzaAmt = pizzas.length; i < pizzaAmt; i++) {
       pizzas[i].style.width = newwidth;
