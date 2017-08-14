@@ -432,7 +432,7 @@ var resizePizzas = function(size) {
     var pizzas = document.querySelectorAll(".randomPizzaContainer");
     var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
     var newwidth;
-		switch(size) {
+    switch(size) {
       case "1":
         newwidth = 0.25;
         break;
@@ -468,11 +468,11 @@ window.performance.mark("mark_start_generating"); // collect timing data
 
 (function() {
 
-	// This for-loop actually creates and appends all of the pizzas when the page loads
-	var pizzasDiv = document.getElementById("randomPizzas");
-	for (var i = 2; i < 100; i++) {
-	  pizzasDiv.appendChild(pizzaElementGenerator(i));
-	}
+  // This for-loop actually creates and appends all of the pizzas when the page loads
+  var pizzasDiv = document.getElementById("randomPizzas");
+  for (var i = 2; i < 100; i++) {
+    pizzasDiv.appendChild(pizzaElementGenerator(i));
+  }
 
 })();
 
@@ -508,17 +508,17 @@ function updatePositions() {
 
   window.requestAnimationFrame(function() {
 
-	  var items = document.querySelectorAll('.mover');
-	  var docTop = document.body.scrollTop / 1250;
+    var items = document.querySelectorAll('.mover');
+    var docTop = document.body.scrollTop / 1250;
 
-	  var phases = [];
-	  for (var i = 0; i < 5; i++) {
-	  	phases.push(Math.sin(docTop + (i % 5)))
-	  }
+    var phases = [];
+    for (var i = 0; i < 5; i++) {
+      phases.push(Math.sin(docTop + (i % 5)))
+    }
 
-	  for (var i = 0, itemAmt = items.length; i < itemAmt; i++) {
-	    items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
-	  }
+    for (var i = 0, itemAmt = items.length; i < itemAmt; i++) {
+      items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
+    }
 
   });
 
@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', function() {
     top = Math.floor(i / cols) * s;
     elem.style.top = top + 'px';
     elemMovingPizzas.appendChild(elem);
- 	}
+  }
 
   updatePositions();
 });
