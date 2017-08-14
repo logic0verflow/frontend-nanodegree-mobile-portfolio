@@ -513,10 +513,10 @@ function updatePositions() {
 
     var phases = [];
     for (var i = 0; i < 5; i++) {
-      phases.push(Math.sin(docTop + (i % 5)))
+      phases.push(Math.sin(docTop + (i % 5)));
     }
 
-    for (var i = 0, itemAmt = items.length; i < itemAmt; i++) {
+    for (i = 0, itemAmt = items.length; i < itemAmt; i++) {
       items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
     }
 
