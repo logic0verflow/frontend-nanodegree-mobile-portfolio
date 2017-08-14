@@ -506,9 +506,13 @@ function updatePositions() {
 	  var items = document.querySelectorAll('.mover');
 	  var docTop = document.body.scrollTop / 1250;
 
+	  var phases = [];
+	  for (var i = 0; i < 5; i++) {
+	  	phases.push(Math.sin(docTop + (i % 5)))
+	  }
+
 	  for (var i = 0, itemAmt = items.length; i < itemAmt; i++) {
-	    var phase = Math.sin(docTop + (i % 5));
-	    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+	    items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
 	  }
 
   });
@@ -531,15 +535,24 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+
+  // Only add pizzas when their top falls within the viewport
+  var vpHeight = window.innerHeight - s;
+  var top = 0;
+
+  var elemMovingPizzas = document.querySelector("#movingPizzas1");
+
+  for (var i = 0; i < 200, top < vpHeight; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
-    elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
-  }
+    top = Math.floor(i / cols) * s;
+    elem.style.top = top + 'px';
+    elemMovingPizzas.appendChild(elem);
+ 	}
+
   updatePositions();
 });
